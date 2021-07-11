@@ -1,0 +1,34 @@
+var myPow = function(x, n) {
+    
+    //each index in dp array stores x raised to index value (x^index)
+    let dp = [];
+    
+    //nullify the negative effect
+    let num = Math.abs(n);
+    
+    //index 0 is 1 because x^0 = 1. similarly x^1 = x;
+    dp[0] = 1;
+    dp[1] = x;
+ 
+    
+    let helperPow = function(x,n,dp){
+        if(dp[n] !== undefined) return dp[n];
+        let half = Math.floor(n/2);
+        if(n%2 === 0) {
+            let res = helperPow(x,half,dp)*helperPow(x,half,dp);
+            dp[n] = res;         
+            return res;
+        } 
+        if(n%2 === 1){
+            let res = helperPow(x,half,dp)*helperPow(x,half,dp)*x;
+            dp[n] = res;          
+            return res;
+        }  
+    }
+    
+    //calling a helper function
+    helperPow(x,num,dp)
+    
+    return n > 0 ? dp[num] : 1/dp[num]
+    
+}
